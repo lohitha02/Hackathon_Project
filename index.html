@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>Pencil_in.login</title>
+    <link rel="stylesheet" href="style.css">    
+</head>
+<body>
+    
+    <div class="login-page">
+    <div class="form">
+        <form>
+        <form class="register-form">
+        <input type="text" placeholder="name"/>
+        <input type="password" placeholder="password"/>
+        <input type="text" placeholder="email_id"/>
+        <button>Create</button>
+        <p class="message">Already Registered?<a href="#"> Login</a></p>
+        </form>
+
+        <input type="text" placeholder="user_id"/>
+        <input type="password" placeholder="password"/>
+        <button><a href="index3.html">Login</a></button>
+        <p class="message"> Not Registered? <a href="#">Register</a></p>
+    </div>
+    </div>
+
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    <script>
+            $(".message a").on('click',function(){
+            $("form").slideToggle();
+            
+            });
+    </script>
+
+
+</body>    
+</html>

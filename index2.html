@@ -1,0 +1,184 @@
+<html>
+<head>
+	<title>Pencil_In App</title>
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	
+	<link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="css/style2.css">
+    <style type="text/css">
+    body {
+        background-image: url("http://www.aljanh.net/data/archive/img/3467036004.jpeg");
+        min-height: 100vh;
+        background-position: bottom;
+        background-repeat: no-repeat;
+        background-size: cover;
+        color: antiquewhite;
+        font-size: 1.5rem;
+
+        
+    }
+    .hero {
+        background-color: rgba(45 , 52, 52, 0.8);
+        min-height: 100vh;
+        min-width: 100vh;
+        top: 0;
+        bottom: 100;
+        position: relative;
+
+    }
+
+    </style>	
+</head>
+
+
+<body>
+        <div class="nav box">
+                <nav>
+                    <div class="logo">MENU</div>
+                    <ul>
+                        <li><a href="index3.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        
+                        <li><a class="active" href="index.html">Log In</a></li>
+                    </ul>
+                </nav>
+            </div>
+	<div class="hero">
+		<div class="container">
+			<h1 class="display-2 text-center">Target Schedules</h1>
+			<p class="lead text-center">Welcome to Pencil_In Application</p>
+			<div class="row">
+				<form id="form" class="col-lg-6 col-8 mx-auto">
+					<div class="input-group">
+						<input id="input" class="form-control" placeholder="input your tasks" value="assigned tasks">
+						<span>
+							<button id="btn" type="button" class="btn btn-primary">Submit</button>
+						</span>
+					</div>			     
+				</form>
+			</div>			
+			<div class="row">				
+				<ul id="list" class="list col-lg-6 col-8 mx-auto">
+				</ul>
+			</div>
+			<div class="row">
+				<button id="btnClr" type="button" class="btn btn-primary mx-auto btnHide">Done</button>
+			</div>				
+		</div>
+	</div>
+
+    <script type="text/javascript">
+        window.onload = function() {
+        
+            var form = document.getElementById("form");
+            var input = document.getElementById("input");
+            var btn = document.getElementById("btn");
+            var list = document.getElementById("list");	
+            var btnClr = document.getElementById("btnClr");	
+            var id = 1;
+            
+            var liItem = "";
+            var taskset = [];
+        
+            
+            btn.addEventListener("click", taskadd);
+        
+            
+            list.addEventListener("click", boxChecked);
+        
+            
+            btnClr.addEventListener("click", clearList);
+        
+            if(localStorage.length <= 0) {
+                btnClr.style.display = "none"; //hide clear btn	
+                console.log("button");
+            }
+        
+            
+            if(localStorage.length > 0) {
+                displayList();
+            }
+        
+        
+            
+            function taskadd() {
+                if(input.value === "") {
+                    alert("Text Field can't be empty! ");
+                }
+                else {
+                    if(list.style.borderTop === "") {
+                        console.log("here!")
+                        list.style.borderTop = "2px solid white";
+                        btnClr.style.display = "inline";
+                    }
+                    var text = input.value;	
+                    var item = `<li id="li-${id}">${text}<input id="box-${id}" 			class="checkboxes" type="checkbox"></li>`;				
+                    list.insertAdjacentHTML('beforeend', item);	
+                    liItem = {item: text, checked: false};
+                    taskset.push(liItem);		
+                    id++;
+                    addToLocalStorage()
+                    form.reset();
+                }
+            }
+        
+            
+            function boxChecked(event) {
+                const element = event.target;
+                if(element.type === "checkbox") {
+                    element.parentNode.style.textDecoration = "line-through";
+                    taskset = JSON.parse(localStorage.getItem("taskset"));
+                    taskset[element.id.split('-')[1]-1].checked = element.checked.toString();
+                    localStorage.setItem("taskset", JSON.stringify(taskset));
+                }
+            }
+        
+            
+            function addToLocalStorage() {
+                if(typeof(Storage) !== "undefined") {
+                    localStorage.setItem("taskset", JSON.stringify(taskset));
+                }
+                else {
+                    alert("browser doesn't support local storage!");
+                }
+            }
+        
+            
+            function displayList() {
+                list.style.borderTop = "2px solid white";
+                taskset = JSON.parse(localStorage.getItem("taskset"));
+                taskset.forEach(function(element) {
+                    console.log(element.item)
+                    var text = element.item;
+                    var item = `<li id="li-${id}">${text}<input id="box-${id}" class="checkboxes" type="checkbox"></li>`;
+                    list.insertAdjacentHTML("beforeend", item);
+                    
+                    if(element.checked) {
+                        var li = document.getElementById("li-"+id);
+                        li.style.textDecoration = "line-through";
+                        li.childNodes[1].checked = element.checked;
+                    }
+                    id++;
+                });
+            }
+        
+            
+            function clearList() {
+                taskset = [];
+                localStorage.clear();
+                list.innerHTML = "";
+                btnClr.style.display = "none";
+                list.style.borderTop = "";
+            }
+        }
+        </script> 
+        <style>
+
+	
+</body>
+</html>
+
+
