@@ -1,4 +1,4 @@
-var zac_bot_token = "750498904:AAFzHVbVsRBTt3TG0H1qjp0vmNKOVn0DhpI";
+var zac_bot_token = "xxxxxxxxxxxxxxxxxxxxxxxxx";
 var zac_url = "https://api.telegram.org/bot" + zac_bot_token;
 
 //var ssep_bot_token = "561841784:AAH2B_BVNMq9QvbyDG-E";
